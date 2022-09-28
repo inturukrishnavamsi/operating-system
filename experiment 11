@@ -1,38 +1,63 @@
-#include<stdio.h>
-#include<conio.h>
+#include<stdlib.h>
 #include<string.h>
+#include<stdio.h>
+struct
+{
+char dname[10],fname[10][10];
+int fcnt;
+}dir;
 void main()
 {
-int nf=0,i=0,j=0,ch;
-char mdname[10],fname[10][10],name[10];
-clrscr();
-printf("Enter the directory name:");
-scanf("%s",mdname);
-printf("Enter the number of files:");
-scanf("%d",&nf);
-do
+int i,ch;
+char f[30];
+dir.fcnt = 0;
+printf("\nEnter name of directory -- ");
+scanf("%s", dir.dname);
+while(1)
 {
-printf("Enter file name to be created:");
-scanf("%s",name);
-for(i=0;i<nf;i++)
+printf("\n\n1. Create File\t2. Delete File\t3. Search File \n 4. Display Files\t5. Exit\nEnter your choice -- ");
+scanf("%d",&ch);
+switch(ch)
 {
-if(!strcmp(name,fname[i]))
+case 1: printf("\nEnter the name of the file -- ");
+scanf("%s",dir.fname[dir.fcnt]);
+dir.fcnt++;
+break;
+case 2: printf("\nEnter the name of the file -- ");
+scanf("%s",f);
+for(i=0;i<dir.fcnt;i++)
+{
+if(strcmp(f, dir.fname[i])==0)
+{
+printf("File %s is deleted ",f);
+strcpy(dir.fname[i],dir.fname[dir.fcnt-1]); break; } }
+if(i==dir.fcnt) printf("File %s not found",f);
+else
+dir.fcnt--;
+break;
+case 3: printf("\nEnter the name of the file -- ");
+scanf("%s",f);
+for(i=0;i<dir.fcnt;i++)
+{
+if(strcmp(f, dir.fname[i])==0)
+{
+printf("File %s is found ", f);
 break;
 }
-if(i==nf)
-{
-strcpy(fname[j++],name);
-nf++;
 }
+if(i==dir.fcnt)
+printf("File %s not found",f);
+break;
+case 4: if(dir.fcnt==0)
+printf("\nDirectory Empty");
 else
-printf("There is already %s\n",name);
-printf("Do you want to enter another file(yes - 1 or no - 0):");
-scanf("%d",&ch);
+{
+printf("\nThe Files are -- ");
+for(i=0;i<dir.fcnt;i++)
+printf("\t%s",dir.fname[i]);
 }
-while(ch==1);
-printf("Directory name is:%s\n",mdname);
-printf("Files names are:");
-for(i=0;i<j;i++)
-printf("\n%s",fname[i]);
-getch();
+break;
+default: exit(0);
+}
+}
 }
